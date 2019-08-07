@@ -54,5 +54,3 @@ Get the number of citations of a paper over time
  - Set default of endYear to current year
  - Extract number of citation
  - Save numbers in scv and plot figure 
-  ---
- - Hope you enjoy it :)
