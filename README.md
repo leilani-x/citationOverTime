@@ -1,5 +1,6 @@
 # citationOverTime
-Get the number of citations of a paper over time
+1. Get the number of citations of a paper over time
+2. Get the number of related paper under a topic
 
 ## requirements
 - Chrome
