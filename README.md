@@ -5,7 +5,7 @@
 ## requirements
 - Chrome
 - [chromedriver](https://chromedriver.chromium.org/downloads)
-  - please check version of your chrome when downloading
+  - please check the version of your chrome when downloading
 - pip install selenium webdriver_manager
 
 ## run
