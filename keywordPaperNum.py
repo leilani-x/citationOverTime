@@ -2,13 +2,14 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 from webdriver_manager.chrome import ChromeDriverManager
 import time, os
+from utils import *
 
 ###################################################################################
 # Setting##########################################################################
 
 ## Paper setting ##################################################################
 
-keyword = "deep+learning"  # TODO auto-get by paper name 
+keyword = "deep+reinforcement+learning+DRL"  # TODO auto-get by paper name 
 # please get in google scholar
 
 startYear = 1999                # TODO set default to the year when paper published
@@ -32,18 +33,20 @@ basicUrl = 'https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&sciodt=0%2C5&c
 
 print("==========keyword:",keyword)
 
+nums = []
 for i in range(startYear, endYear+1, interval):
     finalUrl = "https://scholar.google.com.hk/scholar?hl=en&as_sdt=1%2C5&as_ylo=" + str(i) + '&as_yhi=' + str(i+interval-1) + "&as_vis=1&q=" + str(keyword) + "&btnG="
+    #print(finalUrl)
     driver.get(finalUrl)
     element = driver.find_element_by_id('gs_ab_md')
     driver.find_elements_by_class_name('gs_ab_mdw')
     data = element.text
-    if data.split()[0] != 'about':
+    if data.split()[0] != 'About':
         number = data.split()[0]
     else:
         number = data.split()[1]
-    number = element.text.split()[1]
+    nums.append(int("".join(number.split(','))))
     print('year: {}, about {} results'.format(i, number)) 
     time.sleep(2)
 
-# TODO save numbers in scv and plot figure 
+plotLine(list(range(startYear, endYear+1)), nums, keyword)

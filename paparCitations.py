@@ -36,7 +36,8 @@ for i in range(startYear, endYear+1, interval):
     element = driver.find_element_by_id('gs_ab_md')
     driver.find_elements_by_class_name('gs_ab_mdw')
     data = element.text
-    if data.split()[0] != 'about':
+    print(data)
+    if data.split()[0] != 'About':
         number = data.split()[0]
     else:
         number = data.split()[1]
