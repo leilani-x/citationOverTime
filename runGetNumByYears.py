@@ -1,7 +1,7 @@
 from numByYears import KeywordPaperNumByYears, PaperCitedsNumByYears
 
 ### 1. webDriver Setting ##########################################
-viewChrome = False
+viewChrome = True
 chromedriverPath = r"/Users/lei/Downloads/chromedriver"
 
 ### 2. Task Setting ##############################################
@@ -9,12 +9,12 @@ chromedriverPath = r"/Users/lei/Downloads/chromedriver"
 keywords = ["deep+reinforcement+learning"] 
 
 ####### 2.2 put the id of the paper which you want to analysis;
-paperIDs = [14537753363344344488 ]
+paperIDs = [14537753363344344488]
 ########### you can get the paper id from google scholar;
 
 ####### 2.3 set the x_axis, and you can set more than one x_axis;
 startYears = [1999]            
-endYears = [2020]  
+endYears = [2000]  
 yearSteps = [1]
 
 ####### 2.4 show or save data
@@ -26,7 +26,7 @@ saveImgPath="./saveData/images/"
 saveNums = True
 saveNumsPath = './saveData/numsCsv/'
 ###################################################################
-
+    
 if __name__ == '__main__':
     # get all data
     numByYears = []
@@ -45,5 +45,4 @@ if __name__ == '__main__':
         if showImg: numByYear.imgShow()
         if saveImg: numByYear.imgSave(saveImgPath, basicSaveFileName + '.png')
         if saveNums: numByYear.saveNums(saveNumsPath, basicSaveFileName + '.csv')
-        numByYear.quitWebDriver()
 

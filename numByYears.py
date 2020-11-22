@@ -6,6 +6,7 @@ class NumByYears():
         self.basicUrl = self.concateURL()
         self.driver = setWebDriver(chromedriverPath, viewChrome)
         self.nums = getNumByYear(self.years, self.basicUrl, self.driver)
+        self.quitWebDriver()
 
     def concateURL(self):
         raise NotImplementedError
@@ -23,8 +24,6 @@ class NumByYears():
         saveNums(self.years[:-1], self.nums, savePath, saveFileName)
 
     def quitWebDriver(self):
-        self.driver.stop_client()
-        self.driver.close()
         self.driver.quit()
 
 class KeywordPaperNumByYears(NumByYears):

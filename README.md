@@ -1,56 +1,54 @@
 # citationOverTime
-Get the number of citations of a paper over time
+
+## 1. What can I get by this tool?
+- Trend chart and [csv](example/14537753363344344488_1999_2020_1.csv) of the number of paper citations over time.
+  ![](example/14537753363344344488_1999_2020_1.png)
+- Trend chart and [csv](saveData/images/deep+reinforcement+learning_1999_2002_1.csv) of the number of papers published with keywords over time.
+  ![](example/deep+reinforcement+learning_1999_2020_1.png)
+
+## 2. Hot to run it?
+- python runGetNumByYears.py
+
+### 2.1 How to set my dream papers and keywords?
+- In runGetNumByYears.py:
+  -  Put the keyword which you want to analysis;
+     -  eg. `keywords = ["deep+reinforcement+learning"]`
+  -  Put the id of the paper which you want to analysis;
+     - eg. `paperIDs = [14537753363344344488]`
+  - Set the x_axis, and you can set more than one x_axis;
+    - `startYears = [1999]`            
+    - `endYears = [2020]`  
+    - `yearSteps = [1]`
+
+### 2.2 Where is the saved data?
+- In saveData folder.
+
+### 2.3How to get paper id?
+1. Search paper in Google Scholar.
+   - eg, `Policy gradient methods for reinforcement learning with function approximation`
+2. Click `Cited by xxx` the you can get paper ID from the URL.
+   - ie. `https://scholar.google.com/scholar?cites=14537753363344344488&as_sdt=2005&sciodt=0,5&hl=en`
+   - `14537753363344344488` is the `paperID`
+
+### 2.4 What should I do when meeting 'Error: Pls manually pass the robot detecting...'
+   - 'Error: Pls manually pass the robot detecting by setting viewChrome to True and click 'I'm not a robot' in alert Chrome' meaning you are under google rebot detecting. Unfortunately you should manually pass it :)
+  ![](example/rebotDetecting.png)
+  - Fortunately, the tool save the web cache into ./cache, so you needn't frequently test robot detecting.
+
+### 2.5 Can I hidden the view of Chrome？
+- Yes you can! Pls set `viewChrome = False` in runGetNumByYears.py. 
+- By the way, if you close the view, you can't directly operate the web page when meeting the robot detecting. Then you should close the running task, open the viewChrome, pass the robot detecting, and re-run the interrupted task.
+
+---
 
 ## requirements
 - Chrome
-- [chromedriver](http://chromedriver.storage.googleapis.com/index.html?path=77.0.3865.10/)
+- [chromedriver](http://chromedriver.storage.googleapis.com/index.html?path=77.0.3865.10/) [click to download]
 - pip install selenium webdriver_manager
 
-## run
-- set your user data path of chrom to prevent robot detecting of google
-  - ie. `userProfile = r"C:\Users\yourName\AppData\Local\Google\Chrome\User Data\Default"`
-- search paper (eg, `Policy gradient methods for reinforcement learning with function approximation`) by Google Scholar
-- click `Cited by 2230` and get paper ID from the new url 
-  - ie. `https://scholar.google.com/scholar?cites=14537753363344344488&as_sdt=2005&sciodt=0,5&hl=en`
-  - `14537753363344344488` is the `paperID`
-- set the `paperID` in `run.py`
-- you can also set the time range (`startYear`, `endYear`, `interval`)
-- `python run.py`
-  - you will get the following result if using default setting
-    ```
-    DevTools listening on ws://127.0.0.1:59856/devtools/browser/d6614e5a-1a46-4245-b9ff-4ba91b8956e3
-    1999 - 2 results (0.01 sec)
-    2000 - 11 results (0.02 sec)
-    2001 - About 28 results (0.03 sec)
-    2002 - About 33 results (0.02 sec)
-    2003 - About 36 results (0.03 sec)
-    2004 - About 46 results (0.04 sec)
-    ...
-    ```
-   
-   - Maybe you will meet Error:
-      ```
-      [0807/140244.149:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
-      [0807/140244.150:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\***\AppData\Local\Google\Chrome\User Data\Default\Default\Cache to C:\Users\***\AppData\Local\Google\Chrome\User Data\Default\Default\old_Cache_000
-      [0807/140244.151:ERROR:disk_cache.cc(178)] Unable to create cache
-      ```
-      - Pls close all chrom pages and try again
-    
-    - Maybe you will get none caused by robot test of google
-      ```
-      DevTools listening on ws://127.0.0.1:59814/devtools/browser/135af13e-23fa-4972-9e68-af0507766c6e
-      1999 -
-      2000 -
-      2001 -
-      ...
-      ```
-       - Pls open '127.0.0.1:59814/devtools/browser/135af13e-23fa-4972-9e68-af0507766c6e' in chrom and complete the robot test
-       - I promise you will not need to do this test in a short time (Once I know the length of the period, I will update it)
-  
- ## Todo
- - Put setting into defults.py
- - Auto-get paperId by paper name 
- - Set default of startYear to the year when paper published
- - Set default of endYear to current year
- - Extract number of citation
- - Save numbers in scv and plot figure 
+---
+
+## Todo
+ - [ ] Auto-get paperId by paper name.
+ - [ ] Mix the trend of papers or keywords.
+ - [ ] Save dream paper name and abstracts.

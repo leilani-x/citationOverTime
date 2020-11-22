@@ -22,6 +22,12 @@ def setWebDriver(chromedriverPath, viewChrome=False):
         chrome_options.add_argument('--headless')
     return webdriver.Chrome(chrome_options=chrome_options, executable_path=chromedriverPath)
     
+def inRobotDetecting(driver):
+    if "Please show you're not a robot" in driver.page_source:
+        print("Error: Pls manually pass the robot detecting by setting viewChrome to True and click 'I'm not a robot' in alert Chrome")
+        return True
+    return False
+
 ######## Plot
 def plotLine(x, y, title=None, figSize=(15, 5)):
     plt.figure(figsize=figSize)
@@ -44,6 +50,10 @@ def getNumByYear(sortedYears, basicUrl, driver):
         if index+1 < len(sortedYears):
             finalUrl = basicUrl.format(str(year) + '&as_yhi=' + str(sortedYears[index+1] - 1))
             driver.get(finalUrl)
+
+            while inRobotDetecting(driver):
+                time.sleep(10)
+
             element = driver.find_element_by_id('gs_ab_md')
             data = element.text
             if data.split()[0] != 'About':
