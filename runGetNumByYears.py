@@ -1,4 +1,4 @@
-from numByYears import KeywordPaperNumByYears, PaperCitedsNumByYears
+from src.numByYears import KeywordPaperNumByYears, PaperCitedsNumByYears
 
 ### 1. webDriver Setting ##########################################
 viewChrome = True
