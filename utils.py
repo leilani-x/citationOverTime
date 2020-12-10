@@ -44,23 +44,26 @@ def imgSave(savePath="./saveData/images/", saveFileName='img.png'):
     plt.savefig(savePath + saveFileName)
 
 ######## Nums 
+def getNum(driver):
+    element = driver.find_element_by_id('gs_ab_md')
+    data = element.text
+    if data.split()[0] != 'About':
+        number = data.split()[0]
+    else:
+        number = data.split()[1]
+    return int("".join(number.split(',')))
+
 def getNumByYear(sortedYears, basicUrl, driver):
     nums = []
     for index, year in enumerate(sortedYears):
         if index+1 < len(sortedYears):
             finalUrl = basicUrl.format(str(year) + '&as_yhi=' + str(sortedYears[index+1] - 1))
             driver.get(finalUrl)
-
             while inRobotDetecting(driver):
                 time.sleep(10)
 
-            element = driver.find_element_by_id('gs_ab_md')
-            data = element.text
-            if data.split()[0] != 'About':
-                number = data.split()[0]
-            else:
-                number = data.split()[1]
-            nums.append(int("".join(number.split(','))))
+            number = getNum(driver)
+            nums.append(number)
             print('year: {}, about {} results'.format(year, number)) 
             time.sleep(2)
     return nums
@@ -71,3 +74,31 @@ def saveNums(years, nums, savePath='./saveData/numsCsv/', saveFileName='num.csv'
     dataDf['Year'] = years
     dataDf['Number'] = nums
     dataDf.to_csv(savePath + saveFileName)
+
+######## Papers 
+def getPaperByKeys(sortedYears, basicUrl, driver):
+    papers = {}
+    for index, year in enumerate(sortedYears):
+        if index+1 < len(sortedYears):
+            subPageUrl = basicUrl.format({}, str(year) + '&as_yhi=' + str(sortedYears[index+1] - 1))
+
+            startIndex = 0
+            driver.get(subPageUrl.format(startIndex))
+
+            while inRobotDetecting(driver):
+                time.sleep(10)
+
+            paperNum = getNum(driver)
+            print('============ Paper Num: ', paperNum)
+            while startIndex < paperNum:
+                elements = driver.find_elements_by_class_name('gs_rt')
+                for element in elements:
+                    paper = element.find_elements_by_tag_name("a")[0]
+                    papers[paper.text] = {'download url': \
+                        paper.get_attribute("href")}
+                    print(startIndex, 'Year: {}, Paper Name: {}'.format(year, paper.text)) 
+                    startIndex += 1
+                time.sleep(2)
+                driver.get(subPageUrl.format(startIndex))
+
+    return papers
